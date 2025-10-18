@@ -27,13 +27,16 @@
     <div class=""> <!--navbar-->
       <div class="filters"> 
         <div class="search">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" name="" id="" placeholder="Search for a country" />
+          <form id="search-form" role="search" class="searchbar">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="search" name="search" id="searchItem" placeholder="Search for a country" />
+              <button type="submit" hidden aria-hidden="true">Search</button>
+          </form>
         </div>
       <!-- Filter by region dropdown -->
-       <div class="region">
+       <div id="region" >
          <select >
-            <option valu="" disable selected>Filter by Region</option>
+            <option valu="" >Filter by Region</option>
             <option value="Africa">Africa</option>
             <option value="Americas">Americas</option>
             <option value="Asia">Asia</option>

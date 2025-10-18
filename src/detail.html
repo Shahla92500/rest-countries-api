@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./styles.css"/>
+    <script type="module" src="./script.js" defer></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <header class="navbar">
+      <h1 class="nav-title">Where in the world?</h1>
+
+      <div class="nav-info">
+        <i class="fa-solid fa-moon"></i>
+        Dark Mode
+      </div>
+    </header>
+    <section class="oneCountryTemplate" aria-labelledby="country-title">  <!-- Create a section where the list of blog posts will be displayed dynamically. -->
+        <button class="back-btn"> <span class="arrow">←</span>Back</button>
+
+        <div id="col1">
+            <div class="images">
+              <!-- Ensure that all images have meaningful alt text, and decorative images use alt="". -->
+              <img  src="../design/belg flag.jpg" alt="flag country" id="image">
+            </div>  
+        </div>
+            <!--Added flag--> 
+        <div id="col2" class="details" >  <!--detail section add all info of country here-->
+            <h2 id="country-name" class="name-only">Country name</h2>
+            
+            <ul id="list-ul">  <!-- here we add 8 properties of countri -->
+                <div id="detail1">
+                    <li> Native Name: </li> 
+                    <li> Population: </li> 
+                    <li> Region: </li> 
+                    <li> Sub Region: </li> 
+                    <li> Capital: </li> 
+                </div>
+                <div id="detail2"> 
+                    <li> Top Level Domain:</li>  
+                    <li> Currencies: </li> 
+                    <li> Language: </li> 
+                </div>
+            </ul>
+            <div class="borders" id="borders-id">
+              <span class="arrow">Border Countries</span>
+              <button class="countries-btn">Countries </button>      <!--  add all buttons here   -->
+            </div>
+          </div>  
+      </section> 
+  </body>
+</html>
