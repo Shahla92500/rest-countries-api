@@ -10,11 +10,13 @@ const searchForm = document.getElementById('search-form');
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch(
-      `${BASE_URL}/v3.1/all?fields=name,flags,population,region,capital`,    
+      `${BASE_URL}/v3.1/all?fields=name,flags,population,region,capital,cca3,tld,currencies,languages,borders`,    
     );
     if (!res.ok) { throw new Error("Error fetching data");    }
     const data = await res.json();
     console.log(data);
+
+    sessionStorage.setItem('allCountries', JSON.stringify(data)); // store data in session
     displayCountries(data);
   } catch (e) {
     console.error(e);
@@ -30,11 +32,11 @@ searchForm.addEventListener('submit', (e) => {
 async function filterCountriesByRegion(region){
   try {
     if (!region) {
-      const res = await fetch(`${BASE_URL}/v3.1/all?fields=name,flags,population,region,capital`);
+      const res = await fetch(`${BASE_URL}/v3.1/all?fields=name,flags,population,region,capital,tld,currencies,languages,borders`);
       const data = await res.json();
       return displayCountries(data);    
     }
-    const response = await fetch(`${BASE_URL}/v3.1/region/${region}?fields=name,flags,population,region,capital`);
+    const response = await fetch(`${BASE_URL}/v3.1/region/${region}?fields=name,flags,population,region,capital,tld,currencies,languages,borders`);
     if (!response.ok) {
       throw new Error("Error getting countries")
     }
@@ -70,11 +72,15 @@ function displayCountries(data){
     countriesDiv.appendChild(cardTemplateClone)  
   })
 }
+
 function attachCountryCardHandlers(card, country) {
   // click → go to details
   card.style.cursor = 'pointer';
+
+  // Click through to the border countries on the detail page
   card.addEventListener('click', () => {
     sessionStorage.setItem('selectedCountry', JSON.stringify(country));
+    console.log("country inside attachCountry: " + country)
     location.href = './src/details/detail.html';
   });
   // keyboard (Enter/Space) → same as click
@@ -90,7 +96,7 @@ function attachCountryCardHandlers(card, country) {
 async function searchCountry(country){
   try {
     if (!country) {
-      const res = await fetch(`${BASE_URL}/v3.1/all?fields=flags,name,population,region,capital`);
+      const res = await fetch(`${BASE_URL}/v3.1/all?fields=flags,name,population,region,capital,tld,currencies,languages,borders`);
       const data = await res.json();
       return displayCountries(data);    
     }
@@ -100,7 +106,7 @@ async function searchCountry(country){
 
     const results = await response.json();
      const selectedCountry = Array.isArray(results) ? results[0] : results; 
-    console.log("Francece")
+
     console.log(selectedCountry);
     sessionStorage.setItem('selectedCountry', JSON.stringify(selectedCountry));
     location.href = './src/details/detail.html';

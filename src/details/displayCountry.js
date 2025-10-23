@@ -1,14 +1,14 @@
 
 
 
-// Click through to the border countries on the detail page
+
 // View the optimal layout for the interface depending on their device's screen size
 // See hover and focus states for all interactive elements on the page
 
 const countryTemplate = document.getElementById('country-template');
 const countryRoot = document.getElementById("country-root");
-const imgFlag = document.getElementById("image");
-const bordersId = document.getElementById("borders-id");
+// const imgFlag = document.getElementById("image");
+// const bordersId = document.getElementById("borders-id");
 
 // displaying a selected country 
 export function displayCountry(country){
@@ -18,19 +18,16 @@ export function displayCountry(country){
     const  countryTemplateClone = countryTemplate.cloneNode(true);
     countryTemplateClone.removeAttribute('id');   // remove duplicate from countryTemplate in case
    // get the borders container FROM THE CLONE
-    const bordersWrap = countryTemplateClone.querySelector('#bordBtnId'); 
+    const bordersWrap = countryTemplateClone.querySelector('#borders-id'); 
     // console.log(cardTemplateClone);
-    console.log(`country:  ${country.flags.png}`);
 
-    // countryTemplateClone.style.display = 'block';
     countryTemplateClone.style.display = 'contents';  
+    
     countryTemplateClone.removeAttribute('id');  
 
     countryTemplateClone.querySelector("img").src = country.flags.png
     countryTemplateClone.querySelector("h2").textContent = country.name.common;
 
-  
-   /* if (h2) h2.textContent = country.name?.common ?? '—';*/
     const nativeName = country.name?.nativeName
                 ? Object.values(country.name.nativeName)[0]?.common ?? country.name.common
                 : country.name?.common ?? '—';
@@ -41,8 +38,9 @@ export function displayCountry(country){
     const languages = country.languages? Object.values(country.languages).join(', ') : '—';
     const capital = Array.isArray(country.capital) ? (country.capital[0] ?? '—') : (country.capital ?? '—');
     
-    const borders = country.borders ?? '—';
-    if (Array.isArray(borders) && borders.length) {
+    // const borders = country.borders ?? '—';
+    const borders = Array.isArray(country.borders) ? country.borders : [];
+    if (borders.length) {
       createBordersBtn(borders, bordersWrap);
     }
 
@@ -59,8 +57,7 @@ export function displayCountry(country){
         lis[6].textContent = `Currencies: ${currencies}`;
         lis[7].textContent = `Language: ${languages}`;
     } else {
-        console.warn("Expected 8 <li> elements but found:", lis.length);
-        
+        console.warn("Expected 8 <li> elements but found:", lis.length);        
     }
 
   countryRoot.appendChild(countryTemplateClone); 
@@ -71,25 +68,29 @@ function createBordersBtn(borders,wrapEl) {
 
 // get all countries saved in the main page (I need it for finding complete name of country based on its 3 letters)
   const all = JSON.parse(sessionStorage.getItem('allCountries') || '[]');
+  console.log("all: " + all);
 
-  wrapEl.innerHTML = ''; // clear old buttons
-  wrapEl.style.display = 'contents';  // display hidden layer of new buttons
+  wrapEl.querySelectorAll('button.countries-btn').forEach(btn => btn.remove());
 
   borders.forEach((code) => {
-    console.log(code);
+// create new button:
     const btn = document.createElement('button');
     btn.className = 'countries-btn';
-    btn.textContent = code; // or resolve name below
-    
-    // show the neighbor's name on the button, not cca3
+
     const neighbor = all.find(c => c.cca3 === code);
-    if (neighbor?.name?.common) btn.textContent = neighbor.name.common;
+
+    btn.textContent = neighbor?.name?.common || code; // show name if found otherwise will be its code
+    console.log("code:" + code)
+    
+    // show the neighbor's name on the button, not cca3 
 
     btn.addEventListener('click', () => {
+      console.log ("btn id clicked");
+
       const nextBord = all.find(c => c.cca3 === code);
       if (nextBord) {
         displayCountry(nextBord);
-        sessionStorage.setItem('selectedCountry', JSON.stringify(next));
+        sessionStorage.setItem('selectedCountry', JSON.stringify(nextBord));
       } else {
         console.warn('Country not found for code:', code);
       }
