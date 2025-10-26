@@ -7,8 +7,6 @@
 
 const countryTemplate = document.getElementById('country-template');
 const countryRoot = document.getElementById("country-root");
-// const imgFlag = document.getElementById("image");
-// const bordersId = document.getElementById("borders-id");
 
 // displaying a selected country 
 export function displayCountry(country){
@@ -19,7 +17,6 @@ export function displayCountry(country){
     countryTemplateClone.removeAttribute('id');   // remove duplicate from countryTemplate in case
    // get the borders container FROM THE CLONE
     const bordersWrap = countryTemplateClone.querySelector('#borders-id'); 
-    // console.log(cardTemplateClone);
 
     countryTemplateClone.style.display = 'contents';  
     

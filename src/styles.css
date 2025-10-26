@@ -144,6 +144,7 @@ main, .oneCountryTemplate { max-width: 1200px; margin: 0 auto; }
   margin: 0; 
 }
 @media (max-width: 600px) {
+  
   .oneCountryTemplate {
 
     display: grid;             
